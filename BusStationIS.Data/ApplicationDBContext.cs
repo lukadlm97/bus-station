@@ -1,8 +1,18 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace BusStationIS.Data
 {
-    public class Class1
+    public class ApplicationDBContext:DbContext
     {
+        public ApplicationDBContext()
+        {
+
+        }
+
+        public ApplicationDBContext(DbContextOptions options) : base(options) { }
+        
+
     }
 }
