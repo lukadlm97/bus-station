@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BusStationIS.Data.Migrations
 {
-    public partial class AddTables : Migration
+    public partial class CreateTablesMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

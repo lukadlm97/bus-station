@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusStationIS.Data.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20200205161238_AddTables")]
-    partial class AddTables
+    [Migration("20200205161950_CreateTablesMig")]
+    partial class CreateTablesMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
