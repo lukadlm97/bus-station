@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusStationIS.Data;
+using BusStationIS.Data.ServiceSpecification;
+using BusStationIS.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,7 +28,10 @@ namespace BusStationIS
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
+            services.AddSingleton(Configuration);
+            services.AddScoped<ICity, CityService>();
+            services.AddScoped<ICarrier, CarrierService>();
+            services.AddScoped<IBusStation, BusStationService>();
             services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
