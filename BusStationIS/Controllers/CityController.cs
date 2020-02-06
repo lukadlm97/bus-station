@@ -31,12 +31,28 @@ namespace BusStationIS.Controllers
                 ImageUrl = c.ImageUrl,
                 ZipCode = c.ZipCode,
                 Carriers = _carrierService.GetByCity(c),
-                BusStations = _busStationService.GetByCity(c)
+                BusStations = _busStationService.GetByCity(c.Id)
             });
 
             var model = new CityIndexModel
             {
                 Cities = cityListing
+            };
+
+            return View(model);
+        }
+
+        public IActionResult Detail(int id)
+        {
+            var city = _cityService.GetById(id);
+
+            var model = new CityDetailModel
+            {
+                Name = city.Name,
+                BusStations = _busStationService.GetByCity(id),
+                Carriers = _carrierService.GetByCity(city),
+                ImageUrl = city.ImageUrl,
+                ZipCode = city.ZipCode
             };
 
             return View(model);

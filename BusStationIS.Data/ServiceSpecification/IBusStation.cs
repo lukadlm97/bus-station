@@ -9,6 +9,7 @@ namespace BusStationIS.Data.ServiceSpecification
     {
         BusStation GetById(int id);
         IEnumerable<BusStation> GetAll();
-        IEnumerable<BusStation> GetByCity(City city);
+        IEnumerable<BusStation> GetByCity(int cityId);
+        string GetContacts(BusStation station);
     }
 }

@@ -22,13 +22,14 @@ namespace BusStationIS.Service
         {
             return _context.BusStations
                 .Include(b => b.Address)
-                    .ThenInclude(a => a.City);
+                    .ThenInclude(a => a.City)
+                .Include(b => b.Contacts);
         }
 
-        public IEnumerable<BusStation> GetByCity(City city)
+        public IEnumerable<BusStation> GetByCity(int cityId)
         {
             return GetAll()
-                .Where(b => b.Address.City == city)
+                .Where(b => b.Address.City.Id == cityId)
                 .DefaultIfEmpty();
         }
 
@@ -36,6 +37,21 @@ namespace BusStationIS.Service
         {
             return GetAll()
                 .FirstOrDefault(b => b.Id == id);
+        }
+
+        public string GetContacts(BusStation station)
+        {
+            var busStation = GetAll()
+                .FirstOrDefault(s => s == station);
+
+            if(busStation == null)
+            {
+                return null;
+            }
+
+            var contacts = busStation.Contacts;
+
+            return HumanizHelper.HumanizeContacts(contacts);
         }
     }
 }
