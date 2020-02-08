@@ -11,20 +11,34 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <header class="custom-header mdl-layout__header mdl-layout__header--waterfall">
-            <div class="mdl-layout__header-row">
-                <span class="mdl-layout-title logo"><a href="/">Bus Station IS</a></span>
-                <div class="mdl-layout-spacer"></div>
-                <nav class="mdl-navigation mdl-layout--large-screen-only">
-                    <a class="mdl-navigation__link" asp-controller="Home" asp-action="Index">Home</a>
-                    <a class="mdl-navigation__link" asp-controller="City" asp-action="Index">City</a>
-                    <a class="mdl-navigation__link" asp-controller="Carrier" asp-action="Index">Carriers</a>
-                    <a class="mdl-navigation__link" asp-controller="Branch" asp-action="Index">Branch</a>
-                </nav>
-            </div>
+    <div class=" mdl-js-layout mdl-layout--fixed-header">
+        <header class="">
+           <div id="main">
+               <div class="container">
+                   <nav>
+                       <div class="nav-fostrap">
+                           <ul>
+                               <li>
+                                   <a asp-controller="Home" asp-action="Index">Home</a>
+                               </li>
+                               <li>
+                                   <a asp-controller="City" asp-action="Index">City</a>
+                               </li>
+                               <li>
+                                   <a asp-controller="Carrier" asp-action="Index">Carrier</a>
+                               </li>
+                           </ul>
+                       </div>
+                       <div class="nav-bg-fostrap">
+                           <div class="navbar-fostrap"> <span></span> <span></span> <span></span> </div>
+                           <a href="" class="title-mobile">Bus Station IS</a>
+                       </div>
+                   </nav>
+               </div>
+
+           </div>
         </header>
-        <div class="page-content">
+        <div class="content">
 
             @RenderBody()
 
@@ -38,9 +52,10 @@
         </div>
     </footer>
 
-    
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>

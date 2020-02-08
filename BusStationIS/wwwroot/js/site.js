@@ -2,3 +2,15 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+
+
+
+
+
+$(document).ready(function () {
+	$('.navbar-fostrap').click(function () {
+		$('.nav-fostrap').toggleClass('visible');
+		$('body').toggleClass('cover-bg');
+	});
+});
