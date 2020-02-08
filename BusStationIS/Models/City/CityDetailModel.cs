@@ -1,4 +1,5 @@
-﻿using BusStationIS.Data.Models;
+﻿using BusStationIS.Controllers.FrontHelpers;
+using BusStationIS.Data.Models;
 using BusStationIS.Models.BasStation;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,8 @@ namespace BusStationIS.Models
         public string Name { get; set; }
         public string ZipCode { get; set; }
         public string ImageUrl { get; set; }
-        public IEnumerable<Carrier> Carriers { get; set; }
+        public IEnumerable<BusStationIS.Data.Models.Carrier> Carriers { get; set; }
         public IEnumerable<BusStation> BusStations { get; set; }
+        public string Helper { get; set; }
     }
 }

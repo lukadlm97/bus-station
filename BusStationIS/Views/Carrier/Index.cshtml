@@ -1,0 +1,44 @@
+﻿@model BusStationIS.Models.CarrierViewModel.CarrierIndexModel;
+@{
+    ViewData["Title"] = "Carrier Index";
+}
+
+<h3>Carrier Index Page</h3>
+
+
+<div id="cityTable">
+    <table class="table table-borderless" id="cityIndexTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Contacts</th>
+                <th>Number of Vehicles</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var carrier in Model.Carriers)
+            {
+                <tr class="assetRow">
+                    <td class="">@carrier.Name</td>
+                    <td class="">@carrier.Address.StreetName br.@carrier.Address.StreetNumber (@carrier.Address.City.Name)</td>
+                    <td class="">
+                    @if(carrier.Contacts.Count() == 0)
+                    {
+                        <p>
+                            No contacts to display.
+                        </p>
+                    }
+                    else
+                    {
+                        @carrier.Contacts
+
+                    }
+                    </td>
+                    <td class="">@carrier.Vehicles.Count()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

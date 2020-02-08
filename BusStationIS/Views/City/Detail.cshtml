@@ -10,11 +10,13 @@
     <div class="row">
         <div class="col-md-4">
             <div>
-                <img class="detailImage" src="@Model.ImageUrl" />
+                <img class="imageCell" src="@Model.ImageUrl" />
             </div>
         </div>
         <div class="col-md-4">
+            <div class="nameItem">City name:</div>
             <p id="itemName">@Model.Name</p>
+            <div class="nameItem">Postal code: </div>
             <p id="itemZip">@Model.ZipCode</p>
         </div>
     </div>
@@ -30,15 +32,28 @@
                     <th>Contacts</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach(var station in Model.BusStations)
-                {
+            @if(Model.BusStations == null || Model.BusStations.Count() == 0)
+            {
+               <div>
+                   <p>
+                            No data for diplay.
+
+                   </p>
+               </div>
+            }
+            else
+            {
+                <tbody>
+                    @foreach(var station in Model.BusStations)
+                    {
                     <tr>
-                        <td>@station.Address.StreetName br.@station.Address.StreetNumber .</td>
-                        <td>@station.Contacts.ToString()</td>
+                        <td>@station.Address.StreetName br.@station.Address.StreetNumber.</td>
+                        <td>There will be diplayed contact number and type</td>
                     </tr>
-                }
-            </tbody>
+                    }
+                </tbody>
+
+            }
         </table>
     </div>
     <div class="col-lg-6">
@@ -48,19 +63,31 @@
                 <tr>
                     <th>Name</th>
                     <th>Address</th>
-                    <th>Contact</th>
+                    <th>Contacts</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach(var carrier in Model.Carriers)
-                {
+            @if(Model.Carriers == null || Model.Carriers.Count() == 0)
+            {
+                <div>
+                    <p>
+                        No data for diplay.
+                    </p>
+                </div>
+            }
+            else
+            {
+                <tbody>
+                    @foreach(var carrier in Model.Carriers)
+                    {
                     <tr>
                         <td>@carrier.Name</td>
-                        <td>@carrier.Address.StreetName br.@carrier.Address.StreetNumber .</td>
-                        <td>@carrier.Contacts.ToString()</td>
+                        <td>@carrier.Address.StreetName br.@carrier.Address.StreetNumber.</td>
+                        <td>There will be diplayed contact number and type</td>
                     </tr>
-                }
-            </tbody>
+                    }
+                </tbody>
+
+            }
         </table>
     </div>
 </div>

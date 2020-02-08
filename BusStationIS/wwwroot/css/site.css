@@ -114,6 +114,16 @@ table {
     width:90%;
     
 }
-    table th {
-        height: auto;
-    }
+
+
+table th {
+    height: auto;
+}
+
+.nameItem {
+    font-weight: bold;
+}
+.imageJumb {
+    max-width: 500px;
+    height: 100px;
+}

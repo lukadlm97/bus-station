@@ -21,7 +21,9 @@ namespace BusStationIS.Service
         {
             return _context.Carriers
                 .Include(c => c.Address)
-                    .ThenInclude(a => a.City);
+                    .ThenInclude(a => a.City)
+                .Include(c => c.Contacts)
+                .Include(c=>c.Vehicles);
         }
 
         public IEnumerable<Carrier> GetByCity(City city)

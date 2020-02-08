@@ -48,6 +48,7 @@ namespace BusStationIS.Controllers
 
             var model = new CityDetailModel
             {
+                Id = city.Id,
                 Name = city.Name,
                 BusStations = _busStationService.GetByCity(id),
                 Carriers = _carrierService.GetByCity(city),
