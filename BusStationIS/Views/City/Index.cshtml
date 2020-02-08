@@ -11,30 +11,32 @@
     </div>
 </div>
 
-<div id="cityTable">
-    <table class="table table-bordered table-hover table-condensed" id="cityIndexTable">
-        <thead class="thead-dark">
-            <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Zip Number</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var assets in Model.Cities)
-            {
-                <tr class="assetRow">
-                    <td class="" id="detailImage">
-                        <a asp-controller="City" asp-action="Detail" asp-route-id="@assets.Id">
-                            <img src="@assets.ImageUrl" class="imageCell" />
-                        </a>
-                    </td>
-                    <td class="">@assets.Name</td>
-                    <td class="">@assets.ZipCode</td>
+<div class="row justify-content-center">
+    <div class="col-auto">
+        <table class="table table-responsive table-bordered table-hover table-condensed" id="cityIndexTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Zip Number</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var assets in Model.Cities)
+                {
+                    <tr class="assetRow">
+                        <td class="" id="detailImage">
+                            <a asp-controller="City" asp-action="Detail" asp-route-id="@assets.Id">
+                                <img src="@assets.ImageUrl" class="imageCell" />
+                            </a>
+                        </td>
+                        <td class="">@assets.Name</td>
+                        <td class="">@assets.ZipCode</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    </div>
 
 
