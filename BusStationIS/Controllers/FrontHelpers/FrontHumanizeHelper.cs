@@ -14,9 +14,11 @@ namespace BusStationIS.Controllers.FrontHelpers
             foreach (var contact in contacts)
             {
                 string contactType = HumanizeContactType(contact.Type);
-                formattedContacts += contact.ContactContent + " (" + HumanizeContactType(contact.Type) + ") ";
+                formattedContacts += contact.ContactContent + "(" + HumanizeContactType(contact.Type) + ")";
                 formattedContacts += ',';
+                formattedContacts += ' ';
             }
+            formattedContacts = formattedContacts.TrimEnd(' ');
             formattedContacts = formattedContacts.TrimEnd(',');
             return formattedContacts;
         }

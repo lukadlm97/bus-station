@@ -13,6 +13,8 @@ namespace BusStationIS.Controllers
     {
         private readonly ICarrier _carrierService;
 
+        public string HumanizeHelper { get; private set; }
+
         public CarrierController(ICarrier carrierService)
         {
             _carrierService = carrierService;
@@ -35,6 +37,22 @@ namespace BusStationIS.Controllers
             {
                 Carriers = carriersListing
             };
+            return View(model);
+        }
+
+        public IActionResult Detail(int id)
+        {
+            var carrier = _carrierService.GetById(id);
+
+            var model = new CarrierDetailModel
+            {
+                Id = carrier.Id,
+                Name = carrier.Name,
+                Address = carrier.Address,
+                Contacts = FrontHelpers.FrontHumanizeHelper.ContactsHumanize(carrier.Contacts),
+                Vehicles = carrier.Vehicles
+            };
+
             return View(model);
         }
     }

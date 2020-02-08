@@ -20,7 +20,11 @@
             @foreach (var carrier in Model.Carriers)
             {
                 <tr class="assetRow">
-                    <td class="">@carrier.Name</td>
+                    <td class="">
+                        <a asp-controller="Carrier" asp-action="Detail" asp-route-id="@carrier.Id">
+                            @carrier.Name
+                        </a>
+                    </td>
                     <td class="">@carrier.Address.StreetName br.@carrier.Address.StreetNumber (@carrier.Address.City.Name)</td>
                     <td class="">
                     @if(carrier.Contacts.Count() == 0)
