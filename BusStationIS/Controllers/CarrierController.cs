@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusStationIS.Data.Models;
 using BusStationIS.Data.ServiceSpecification;
 
 using BusStationIS.Models.CarrierViewModel;
+using BusStationIS.Models.City;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BusStationIS.Controllers
@@ -12,11 +14,30 @@ namespace BusStationIS.Controllers
     public class CarrierController : Controller
     {
         private readonly ICarrier _carrierService;
+        private readonly ICity _cityService;
 
-
-        public CarrierController(ICarrier carrierService)
+        public CarrierController(ICarrier carrierService,ICity cityService)
         {
             _carrierService = carrierService;
+            _cityService = cityService;
+        }
+
+
+        public IActionResult Create()
+        {
+            var cities = _cityService.GetAll();
+
+            var allCities = cities.Select(c => new City
+            {
+                Id = c.Id,
+                Name = c.Name
+            });
+
+            var model = new AllCities
+            {
+                Citys = allCities
+            };
+            return View(model);
         }
 
         public IActionResult Index()
