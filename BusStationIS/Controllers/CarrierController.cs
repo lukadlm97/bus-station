@@ -19,9 +19,6 @@ namespace BusStationIS.Controllers
             _carrierService = carrierService;
         }
 
-    
-
-
         public IActionResult Index()
         {
             var carriers = _carrierService.GetAll();
