@@ -7,6 +7,6 @@ namespace BusStationIS.Models.City
 {
     public class AllCities
     {
-        public IEnumerable<BusStationIS.Data.Models.City> Citys { get; set; }
+        public IEnumerable<BusStationIS.Data.Models.City> Cities { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusStationIS.Data.Models;
 using BusStationIS.Data.ServiceSpecification;
-
+using BusStationIS.Models.Carrier;
 using BusStationIS.Models.CarrierViewModel;
 using BusStationIS.Models.City;
 using Microsoft.AspNetCore.Mvc;
@@ -33,11 +33,23 @@ namespace BusStationIS.Controllers
                 Name = c.Name
             });
 
-            var model = new AllCities
+            var model = new CarrierInputModel
             {
-                Citys = allCities
+               Cities = allCities
             };
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Create([Bind]CarrierInputModel carrier)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["msg"] = "Model is not valid!";
+                return Create();
+            }
+            //TO DO: add carrier
+            return RedirectToPage("/Index");
         }
 
         public IActionResult Index()
