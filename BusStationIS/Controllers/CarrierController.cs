@@ -13,12 +13,14 @@ namespace BusStationIS.Controllers
     {
         private readonly ICarrier _carrierService;
 
-        public string HumanizeHelper { get; private set; }
 
         public CarrierController(ICarrier carrierService)
         {
             _carrierService = carrierService;
         }
+
+    
+
 
         public IActionResult Index()
         {

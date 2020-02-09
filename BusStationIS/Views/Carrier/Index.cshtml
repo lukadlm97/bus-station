@@ -1,4 +1,5 @@
-﻿@model BusStationIS.Models.CarrierViewModel.CarrierIndexModel;
+﻿@page
+@model BusStationIS.Models.CarrierViewModel.CarrierIndexModel;
 @{
     ViewData["Title"] = "Carrier Index";
 }
@@ -8,49 +9,54 @@
     <div class="page-header clearfix datailHeading">
         <h2 class="text-muted">Carrier Index Page</h2>
     </div>
-    <button class="mdc-icon-button material-icon">add</button>
+
 </div>
 
 
 <div class="row justify-content-center">
-    <div class="col-auto">
-    <table class="table table-bordered table-hover table-condensed table-responsive" id="cityIndexTable">
-        <thead class="thead-dark">
-            <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Contacts</th>
-                <th>Number of Vehicles</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var carrier in Model.Carriers)
-            {
-                <tr class="assetRow">
-                    <td class="">
-                        <a asp-controller="Carrier" asp-action="Detail" asp-route-id="@carrier.Id">
-                            @carrier.Name
-                        </a>
-                    </td>
-                    <td class="">@carrier.Address.StreetName br.@carrier.Address.StreetNumber (@carrier.Address.City.Name)</td>
-                    <td class="">
-                    @if(carrier.Contacts.Count() == 0)
-                    {
-                        <p>
-                            No contacts to display.
-                        </p>
-                    }
-                    else
-                    {
-                        @carrier.Contacts
 
-                    }
-                    </td>
-                    <td class="">@carrier.Vehicles.Count()</td>
+    <div class="col-auto">
+        <a asp-page="Create" class="btn btn-outline-primary btn-lg">Create</a>
+        <div>
+            <p></p>
+        </div>
+        <table class="table table-bordered table-hover table-condensed table-responsive" id="cityIndexTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Contacts</th>
+                    <th>Number of Vehicles</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var carrier in Model.Carriers)
+                {
+                    <tr class="assetRow">
+                        <td class="">
+                            <a asp-controller="Carrier" asp-action="Detail" asp-route-id="@carrier.Id">
+                                @carrier.Name
+                            </a>
+                        </td>
+                        <td class="">@carrier.Address.StreetName br.@carrier.Address.StreetNumber (@carrier.Address.City.Name)</td>
+                        <td class="">
+                            @if (carrier.Contacts.Count() == 0)
+                            {
+                                <p>
+                                    No contacts to display.
+                                </p>
+                            }
+                            else
+                            {
+                                @carrier.Contacts
+
+                            }
+                        </td>
+                        <td class="">@carrier.Vehicles.Count()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 
 </div>
