@@ -11,5 +11,6 @@ namespace BusStationIS.Data.ServiceSpecification
         IEnumerable<Carrier> GetAll();
         IEnumerable<Carrier> GetByCity(City city);
         bool AddNewCarrier(Carrier carrier);
+        bool Update(Carrier carrier);
     }
 }

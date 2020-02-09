@@ -54,5 +54,20 @@ namespace BusStationIS.Service
             return GetAll()
                 .FirstOrDefault(c => c.Id == id);
         }
+
+        public bool Update(Carrier carrier)
+        {
+            try
+            {
+                _context.Carriers.Update(carrier);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
     }
 }

@@ -54,6 +54,37 @@ namespace BusStationIS.Controllers
             return View(model);
         }
 
+
+        [HttpPost]
+        public IActionResult AddContact([Bind]CarrierContactInputModel carrierContact,int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["msg"] = "Model is not valid!";
+                return Create();
+            }
+            Contact newContact = new Contact
+            {
+                ContactContent = carrierContact.ContactContent,
+                Type = carrierContact.Type
+            };
+
+            Carrier carrier = _carrierService.GetById(id);
+            carrier.Contacts.Add(newContact);
+
+            if (_carrierService.Update(carrier))
+            {
+                TempData["msg"] = "Contact is created!";
+            }
+            else
+            {
+                TempData["msg"] = "Contact is not created!";
+            }
+
+            return RedirectToPage("/..");
+        }
+
+
         [HttpPost]
         public IActionResult Create([Bind]CarrierInputModel carrier)
         {
