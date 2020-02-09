@@ -33,6 +33,12 @@ namespace BusStationIS.Service
                 .FirstOrDefault(c => c.Id == id);
         }
 
+        public City GetByName(string name)
+        {
+            return GetAll()
+                .FirstOrDefault(c => c.Name.ToLower() == name.ToLower());
+        }
+
         public void Update(int id)
         {
             throw new NotImplementedException();

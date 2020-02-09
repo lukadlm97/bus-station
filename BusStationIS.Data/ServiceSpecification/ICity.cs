@@ -11,5 +11,6 @@ namespace BusStationIS.Data.ServiceSpecification
         City GetById(int id);
         void Update(int id);
         void Delete(int id);
+        City GetByName(string name);
     }
 }

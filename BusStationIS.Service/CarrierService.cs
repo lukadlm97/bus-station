@@ -17,6 +17,22 @@ namespace BusStationIS.Service
         {
             _context = context;
         }
+
+        public bool AddNewCarrier(Carrier carrier)
+        {
+            try
+            {
+                _context.Add(carrier);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
         public IEnumerable<Carrier> GetAll()
         {
             return _context.Carriers

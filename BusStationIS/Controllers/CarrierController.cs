@@ -48,8 +48,29 @@ namespace BusStationIS.Controllers
                 TempData["msg"] = "Model is not valid!";
                 return Create();
             }
-            //TO DO: add carrier
-            return RedirectToPage("/Index");
+            City newCity = _cityService.GetByName(carrier.CityName);
+            Address newAddress = new Address
+            {
+                StreetName = carrier.StreetName,
+                StreetNumber = carrier.StreetNumber,
+                City = newCity
+            };
+            Carrier newCarrier = new Carrier
+            {
+                Name = carrier.Name,
+                Address = newAddress
+            };
+
+            if (_carrierService.AddNewCarrier(newCarrier))
+            {
+                TempData["msg"] = "Carrier is created!";
+            }
+            else
+            {
+                TempData["msg"] = "Carrier is not created!";
+            }
+
+            return RedirectToPage("/..");
         }
 
         public IActionResult Index()
