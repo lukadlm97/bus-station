@@ -15,11 +15,25 @@ namespace BusStationIS.Controllers
     {
         private readonly ICarrier _carrierService;
         private readonly ICity _cityService;
+        private readonly IContact _contactService;
 
-        public CarrierController(ICarrier carrierService,ICity cityService)
+        public CarrierController(ICarrier carrierService,ICity cityService,IContact contactService)
         {
             _carrierService = carrierService;
             _cityService = cityService;
+            _contactService = contactService;
+        }
+
+        public IActionResult AddContact(int id)
+        {
+            var contactTypes = _contactService.GetContactTypes();
+
+            var model = new CarrierContactInputModel
+            {
+                ContactTypes = contactTypes
+            };
+
+            return View(model);
         }
 
 
