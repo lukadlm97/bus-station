@@ -16,12 +16,14 @@ namespace BusStationIS.Controllers
         private readonly ICarrier _carrierService;
         private readonly ICity _cityService;
         private readonly IContact _contactService;
+        private readonly IVehicle _vehicleService;
 
-        public CarrierController(ICarrier carrierService,ICity cityService,IContact contactService)
+        public CarrierController(ICarrier carrierService,ICity cityService,IContact contactService,IVehicle vehicleService)
         {
             _carrierService = carrierService;
             _cityService = cityService;
             _contactService = contactService;
+            _vehicleService = vehicleService;
         }
 
         public IActionResult AddContact(int id)
@@ -30,12 +32,55 @@ namespace BusStationIS.Controllers
 
             var model = new CarrierContactInputModel
             {
-                ContactTypes = contactTypes
+                ContactTypes = contactTypes,
+                CarrierId = id
             };
 
             return View(model);
         }
 
+        public IActionResult AddVehicle(int id)
+        {
+            var vehicleType = _vehicleService.GetVehicleTypes();
+
+            var model = new CarrierVehicleInputModel
+            {
+                VehicleTypes = vehicleType,
+                CarrierId = id
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddVehicle([Bind]CarrierVehicleInputModel vehicleInputModel,int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["msg"] = "Model is not valid!";
+                return Index();
+            }
+            Vehicle vehicle = new Vehicle
+            {
+                RegistrationNumber = vehicleInputModel.RegistrationNumber,
+                Available = vehicleInputModel.Available,
+                Capacity = vehicleInputModel.Capacity,
+                VehicleType = vehicleInputModel.VehicleType
+            };
+
+            Carrier carrier = _carrierService.GetById(id);
+            carrier.Vehicles.Add(vehicle);
+
+            if (_carrierService.Update(carrier))
+            {
+                TempData["msg"] = "Vehicle is created!";
+            }
+            else
+            {
+                TempData["msg"] = "Vehicle is not created!";
+            }
+
+            return RedirectToPage("/..");
+        }
 
         public IActionResult Create()
         {
