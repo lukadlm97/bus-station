@@ -43,7 +43,7 @@ namespace BusStationIS.Controllers
         {
             _carrierService.Delete(id);
 
-            return NoContent();
+            return RedirectToAction("Index");
         }
 
         public IActionResult AddVehicle(int id)
@@ -133,7 +133,23 @@ namespace BusStationIS.Controllers
                 TempData["msg"] = "Contact is not created!";
             }
 
-            return RedirectToPage("/..");
+            return RedirectToPage("/Index",new { area = "Carrier"});
+        }
+
+        public IActionResult Edit(int id)
+        {
+            Carrier carrier = _carrierService.GetById(id);
+
+            CarrierInputModel carrierInput = new CarrierInputModel
+            {
+                Name = carrier.Name,
+                StreetName = carrier.Address.StreetName,
+                StreetNumber = carrier.Address.StreetNumber,
+                Cities = _cityService.GetAll(),
+                CityName = carrier.Address.City.Name
+            };
+
+            return View(carrierInput);
         }
 
 
@@ -167,7 +183,7 @@ namespace BusStationIS.Controllers
                 TempData["msg"] = "Carrier is not created!";
             }
 
-            return RedirectToPage("/..");
+            return RedirectToPage("~/Home");
         }
 
         public IActionResult Index()
