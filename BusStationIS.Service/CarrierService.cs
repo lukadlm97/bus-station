@@ -33,6 +33,12 @@ namespace BusStationIS.Service
             }
         }
 
+        public void Delete(int id)
+        {
+            _context.Carriers.Remove(GetById(id));
+            _context.SaveChanges();
+        }
+
         public IEnumerable<Carrier> GetAll()
         {
             return _context.Carriers

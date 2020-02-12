@@ -20,7 +20,7 @@
         <div>
             <p></p>
         </div>
-        <table class="table table-bordered table-hover table-condensed table-responsive" id="cityIndexTable">
+        <table class="table table-bordered table-hover table-condensed table-responsive cityIndexTable">
             <thead class="thead-dark">
                 <tr>
                     <th>Name</th>
@@ -55,13 +55,18 @@
                     </td>
                     <td class="">@carrier.Vehicles.Count()</td>
                     <td>
-                        <button type="button" class="btn btn-default">
-                            <span class="glyphicon glyphicon-edit"></span> Edit
-                        </button>
-                        <button type="button" class="btn btn-default">
-                            <span class="glyphicon glyphicon-trash"></span> Delete
-                        </button>
-                        
+                        <div class="col-auto">
+                            <form asp-action="Delete" asp-route-id="@carrier.Id" data-ajax="true">
+                                <button type="submit" class="btn btn-default" aria-label="Edit">
+                                    <i class="mdi mdi-pencil" aria-hidden="true"></i>  Edit
+                                </button>
+                            </form>
+                            <form asp-action="Delete" asp-route-id="@carrier.Id" data-ajax="true">
+                                <button type="submit" class="btn btn-default" aria-label="Delete">
+                                    <i class="mdi mdi-minus-circle" aria-hidden="true"></i> Delete
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 }

@@ -38,6 +38,13 @@ namespace BusStationIS.Controllers
 
             return View(model);
         }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            _carrierService.Delete(id);
+
+            return NoContent();
+        }
 
         public IActionResult AddVehicle(int id)
         {
