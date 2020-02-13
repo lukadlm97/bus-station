@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using BusStationIS.Data.Models.Weather;
 using BusStationIS.Data.ServiceSpecification;
 using BusStationIS.Models;
+using BusStationIS.Models.City;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace BusStationIS.Controllers
 {
@@ -42,6 +46,34 @@ namespace BusStationIS.Controllers
             return View(model);
         }
 
+
+        public async Task<OpenWeatherResponseOutput> GetWeatherInfo(string city)
+        {
+            using (var client = new HttpClient()) {
+                try
+                {
+                    client.BaseAddress = new Uri("https://api.openweathermap.org");
+                    var response = await client.GetAsync($"/data/2.5/weather?q={city}&appid=437318050e913abb8509dc60a7d150f8&units=metric");
+                    response.EnsureSuccessStatusCode();
+
+                    var stringResult = await response.Content.ReadAsStringAsync();
+                    var rawWeather = JsonConvert.DeserializeObject<OpenWeatherResponse>(stringResult);
+                    return new OpenWeatherResponseOutput{ 
+                        Temp = rawWeather.Main.Temp,
+                        Summary = string.Join(",",rawWeather.Weather.Select(x=>x.Main)),
+                        City=rawWeather.Name
+                    };
+                }
+                catch(HttpRequestException httpRequestException)
+                {
+                    return null;
+
+                }
+            }
+               
+        }
+
+
         public IActionResult Detail(int id)
         {
             var city = _cityService.GetById(id);
@@ -55,6 +87,7 @@ namespace BusStationIS.Controllers
                 ImageUrl = city.ImageUrl,
                 ZipCode = city.ZipCode
             };
+            model.OpenWeather = GetWeatherInfo(model.Name);
 
             return View(model);
         }
