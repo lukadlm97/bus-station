@@ -9,5 +9,6 @@ namespace BusStationIS.Data.ServiceSpecification
     {
         public IEnumerable<VehicleType> GetVehicleTypes();
         public IEnumerable<Vehicle> GetAll();
+        Vehicle GetByRegistration(string registration);
     }
 }

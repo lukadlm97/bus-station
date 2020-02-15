@@ -8,5 +8,6 @@ namespace BusStationIS.Data.ServiceSpecification
     public interface IPaymentCategory
     {
         public IEnumerable<PaymentCategory> GetAll();
+        public PaymentCategory GetByName(string categoryName);
     }
 }

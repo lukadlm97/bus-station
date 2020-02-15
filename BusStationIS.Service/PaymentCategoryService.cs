@@ -19,5 +19,10 @@ namespace BusStationIS.Service
         {
             return _context.PaymentCategories;
         }
+
+        public PaymentCategory GetByName(string categoryName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -9,6 +9,6 @@ namespace BusStationIS.Data.ServiceSpecification
     {
         public IEnumerable<Departure> GetAll();
         public Departure GetById(int id);
-        public void Add(Departure newDeparture);
+        public bool Add(Departure newDeparture);
     }
 }

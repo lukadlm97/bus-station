@@ -13,5 +13,6 @@ namespace BusStationIS.Data.ServiceSpecification
         bool AddNewCarrier(Carrier carrier);
         bool Update(Carrier carrier);
         void Delete(int id);
+        Carrier GetByName(string name);
     }
 }

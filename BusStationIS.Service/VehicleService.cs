@@ -21,6 +21,11 @@ namespace BusStationIS.Service
             return _context.Vehicles;
         }
 
+        public Vehicle GetByRegistration(string registration)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<VehicleType> GetVehicleTypes()
         {
             return (IEnumerable<VehicleType>)Enum.GetValues(typeof(VehicleType));

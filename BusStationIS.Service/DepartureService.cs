@@ -8,7 +8,7 @@ namespace BusStationIS.Service
 {
     public class DepartureService : IDeparture
     {
-        public void Add(Departure newDeparture)
+        public bool Add(Departure newDeparture)
         {
             throw new NotImplementedException();
         }

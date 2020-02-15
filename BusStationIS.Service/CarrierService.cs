@@ -61,6 +61,11 @@ namespace BusStationIS.Service
                 .FirstOrDefault(c => c.Id == id);
         }
 
+        public Carrier GetByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Update(Carrier carrier)
         {
             try
