@@ -5,9 +5,8 @@ using System.Text;
 
 namespace BusStationIS.Data.ServiceSpecification
 {
-    public interface IVehicle
+    public interface IDistance
     {
-        public IEnumerable<VehicleType> GetVehicleTypes();
-        public IEnumerable<Vehicle> GetAll();
+        public Distance CalculateDistance(string cityForm, string cityTo);
     }
 }

@@ -34,6 +34,8 @@ namespace BusStationIS
             services.AddScoped<IBusStation, BusStationService>();
             services.AddScoped<IContact, ContactService>();
             services.AddScoped<IVehicle, VehicleService>();
+            services.AddScoped<IDeparture, DepartureService>();
+            services.AddScoped<IPaymentCategory, PaymentCategoryService>();
             services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 

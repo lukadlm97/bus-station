@@ -7,23 +7,17 @@ using System.Text;
 
 namespace BusStationIS.Service
 {
-    public class VehicleService : IVehicle
+    public class PaymentCategoryService : IPaymentCategory
     {
         private readonly ApplicationDBContext _context;
 
-        public VehicleService(ApplicationDBContext context)
+        public PaymentCategoryService(ApplicationDBContext context)
         {
             _context = context;
         }
-
-        public IEnumerable<Vehicle> GetAll()
+        public IEnumerable<PaymentCategory> GetAll()
         {
-            return _context.Vehicles;
-        }
-
-        public IEnumerable<VehicleType> GetVehicleTypes()
-        {
-            return (IEnumerable<VehicleType>)Enum.GetValues(typeof(VehicleType));
+            return _context.PaymentCategories;
         }
     }
 }
