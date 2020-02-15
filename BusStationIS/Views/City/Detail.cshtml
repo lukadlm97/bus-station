@@ -13,22 +13,30 @@
 
 <div class="jumbotron">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div>
                 <img class="imageCell" src="@Model.ImageUrl" />
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="nameItem">City name:</div>
             <p id="itemName">@Model.Name</p>
             <div class="nameItem">Postal code: </div>
             <p id="itemZip">@Model.ZipCode</p>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="nameItem">Current Temperature:</div>
             <p id="itemName">@Model.OpenWeather.Result.Temp  ‎°C</p>
             <div class="nameItem">Current Conditions:</div>
             <p id="itemName">@Model.OpenWeather.Result.Summary</p>
+        </div>
+        <div class="col-md-3">
+            <div class="nameItem">Current Pressure:</div>
+            <p id="itemName">@Model.OpenWeather.Result.Pressure mbar</p>
+            <div class="nameItem">
+                Current Wind Speed:
+            </div>
+            <p id="itemName">@Model.OpenWeather.Result.WindSpeed m/s</p>
         </div>
     </div>
 </div>

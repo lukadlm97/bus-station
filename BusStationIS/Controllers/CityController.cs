@@ -61,7 +61,11 @@ namespace BusStationIS.Controllers
                     return new OpenWeatherResponseOutput{ 
                         Temp = rawWeather.Main.Temp,
                         Summary = string.Join(",",rawWeather.Weather.Select(x=>x.Main)),
-                        City=rawWeather.Name
+                        City=rawWeather.Name,
+                        WindSpeed = rawWeather.Wind.Speed,
+                        MaxTemp = rawWeather.Main.TempMax,
+                        MinTemp = rawWeather.Main.TempMin,
+                        Pressure = rawWeather.Main.Pressure
                     };
                 }
                 catch(HttpRequestException httpRequestException)
