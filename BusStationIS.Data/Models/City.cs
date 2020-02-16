@@ -10,5 +10,17 @@ namespace BusStationIS.Data.Models
         public string Name { get; set; }
         public string ZipCode { get; set; }
         public string ImageUrl { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if(obj is City c)
+            {
+                if (c.Name == Name)
+                    return true;
+            }
+            return false;
+        }
+
+
     }
 }

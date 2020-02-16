@@ -3,6 +3,7 @@ using BusStationIS.Data.Models;
 using BusStationIS.Data.ServiceSpecification;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BusStationIS.Service
@@ -23,7 +24,8 @@ namespace BusStationIS.Service
 
         public Vehicle GetByRegistration(string registration)
         {
-            throw new NotImplementedException();
+            return GetAll()
+                .FirstOrDefault(v => v.RegistrationNumber == registration);
         }
 
         public IEnumerable<VehicleType> GetVehicleTypes()

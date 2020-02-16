@@ -3,6 +3,7 @@ using BusStationIS.Data.Models;
 using BusStationIS.Data.ServiceSpecification;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BusStationIS.Service
@@ -22,7 +23,8 @@ namespace BusStationIS.Service
 
         public PaymentCategory GetByName(string categoryName)
         {
-            throw new NotImplementedException();
+            return GetAll()
+                .FirstOrDefault(pc => pc.Name == categoryName);
         }
     }
 }

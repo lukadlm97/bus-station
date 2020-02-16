@@ -50,7 +50,13 @@ namespace BusStationIS.Controllers
                 Vehicle = _vehicleService.GetByRegistration(departureInput.VehicleRegistration)
             };
 
-            if (false)
+            if(IsSameCity(newDeparture.CityFrom,newDeparture.CityTo))
+            {
+                TempData["msg"] = "Departure must be between two different cities!";
+                return Create();
+            }
+
+            if (_deparatureService.Add(newDeparture))
             {
                 TempData["msg"] = "Departure is created!";
             }
@@ -60,6 +66,13 @@ namespace BusStationIS.Controllers
             }
 
             return RedirectToPage("/Index");
+        }
+
+        private bool IsSameCity(City cityFrom, City cityTo)
+        {
+            if (cityFrom == cityTo)
+                return true;
+            return false;
         }
 
         public IActionResult Create()

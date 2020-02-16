@@ -63,7 +63,8 @@ namespace BusStationIS.Service
 
         public Carrier GetByName(string name)
         {
-            throw new NotImplementedException();
+            return GetAll()
+                .FirstOrDefault(c => c.Name.ToLower() == name.ToLower());
         }
 
         public bool Update(Carrier carrier)
