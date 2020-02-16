@@ -7,6 +7,6 @@ namespace BusStationIS.Data.ServiceSpecification
 {
     public interface IDistance
     {
-        public Distance CalculateDistance(string cityForm, string cityTo);
+        public Distance CalculateDistance(City cityForm, City cityTo);
     }
 }
