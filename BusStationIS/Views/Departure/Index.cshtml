@@ -10,6 +10,8 @@
     <a asp-controller="Departure" asp-action="Create" class="btn btn-outline-primary btn-lg">Create New Departure</a>
 </div>
 
+<div><br/></div>
+
 <div class="jumbotron bg-light">
     <table class="table table-striped">
         <thead>
@@ -43,11 +45,18 @@
                 <td>@dept.NumberOfSeats</td>
                 <td>@dept.Distance.DistanceBetween</td>
                 <td>
-                    <form asp-action="MakeCard" asp-controller="Departure" asp-route-id=@dept.Id>
-                        <button type="submit" class="btn btn-success" aria-label="Info">
-                            <i class="mdi mdi-ticket"></i> Make Card
-                        </button>
-                    </form>
+                    <div class="col-auto">
+                        <form asp-action="Edit" asp-controller="Departure" asp-route-id=@dept.Id>
+                            <button type="submit" class="btn btn-success" aria-label="Info">
+                                <i class="mdi mdi-ticket"></i> Edit
+                            </button>
+                        </form>
+                        <form asp-action="Delete" asp-route-id="@dept.Id" data-ajax="true" data-ajax-success="deleteItem(this)">
+                            <button type="submit" class="btn btn-danger" aria-label="Delete">
+                                <i class="mdi mdi-minus-circle" aria-hidden="true"></i> Delete
+                            </button>
+                        </form>
+                    </div>
                 </td>
             </tr>
             }

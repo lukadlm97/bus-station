@@ -58,6 +58,27 @@ namespace BusStationIS.Controllers
         }
 
 
+        public IActionResult Detail(int id)
+        {
+            var departure = _deparatureService.GetById(id);
+
+            var model = new DepartureDetailModel
+            {
+                Id = departure.Id,
+                NumberOfSeats = departure.NumberOfSeats,
+                CityFrom = departure.CityFrom,
+                CityTo = departure.CityTo,
+                Carrier = departure.Carrier,
+                Distance = departure.Distance,
+                PaymentCategory = departure.PaymentCategory,
+                PriceOfCard = departure.PriceOfCard,
+                Vehicle = departure.Vehicle,
+                Cards = departure.Cards
+            };
+
+            return View(model);
+        }
+
         [HttpPost]
         public IActionResult Create([Bind]DepartureInputModel departureInput)
         {
@@ -76,14 +97,14 @@ namespace BusStationIS.Controllers
                 Vehicle = _vehicleService.GetByRegistration(departureInput.VehicleRegistration)
             };
 
-            newDeparture.Distance = _distanceService.CalculateDistance(newDeparture.CityFrom,newDeparture.CityTo);
-
-
             if(_cityService.IsSameCity(newDeparture.CityFrom,newDeparture.CityTo))
             {
                 TempData["msg"] = "Departure must be between two different cities!";
                 return Create();
             }
+
+            newDeparture.Distance = _distanceService.CalculateDistance(newDeparture.CityFrom,newDeparture.CityTo);
+
             //TODO: create service for calculate price of card
             newDeparture.PriceOfCard = _priceService.CalculatePrice(newDeparture.Distance.DistanceBetween, newDeparture.PaymentCategory.Price);
 

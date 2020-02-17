@@ -90,6 +90,11 @@ a {
   color: #0366d6;
 }
 
+.jumbotron{
+    margin-left:50px;
+    margin-top:50px;
+}
+
 #containerInfo{
     background-color:greenyellow;
 }

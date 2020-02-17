@@ -1,0 +1,35 @@
+﻿@model BusStationIS.Models.Departure.DepartureDetailModel;
+@{
+    ViewData["Title"] = "Detail";
+}
+
+    <div class="container">
+        <div class="page-header clearfix datailHeading">
+            <h2 class="text-muted">View Departure Item</h2>
+        </div>
+    </div>
+
+<div class="jumbotron bg-light">
+    <div class="col-md-3">
+        <div class="nameItem">City From:</div>
+        <p class="itemName">@Model.CityFrom.Name</p>
+        <div class="nameItem">City To:</div>
+        <p class="itemName">@Model.CityTo.Name</p>
+        <div class="nameItem">Carrier:</div>
+        <p class="itemName">@Model.Carrier.Name</p>
+    </div>
+    <div class="col-md-3">
+        <div class="nameItem">Vehicle</div>
+        <p class="itemName">@Model.Vehicle.RegistrationNumber (@Model.Vehicle.VehicleType)</p>
+        <div class="nameItem">Payment Category:</div>
+        <p class="itemName">@Model.PaymentCategory.Name</p>
+    </div>
+    <div>
+        <div class="nameItem">INFO ABOUT DEPARUTE:</div>
+        <div class="nameItem">Number Of Seats:</div>
+        <p class="itemName">@Model.NumberOfSeats</p>
+        <div class="nameItem">Card Price:</div>
+        <p class="itemName">@Model.PriceOfCard</p>
+    </div>
+</div>
+
