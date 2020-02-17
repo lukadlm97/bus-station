@@ -1,4 +1,4 @@
-﻿
+﻿@model BusStationIS.Models.Departure.DepartureIndexModel;
 @{
     ViewData["Title"] = "Departure";
 }
@@ -8,5 +8,37 @@
         <h2 class="text-muted">Departure Index Page</h2>
    </div>
     <a asp-controller="Departure" asp-action="Create" class="btn btn-outline-primary btn-lg">Create New Departure</a>
+</div>
+
+<div class="jumbotron alert-info">
+    <table class="alert-dark">
+        <thead>
+            <tr>
+                <th>More Info</th>
+                <th>City From</th>
+                <th>City To</th>
+                <th>Carrier</th>
+                <th>Price</th>
+                <th>Number of Seats</th>
+                <th>Distance</th>
+                <th>Cards</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dept in Model.Departures)
+            {
+                <tr>
+                    <td><a class="btn btn-light" asp-action="Detail" asp-controller="Departure" asp-route-id=@dept.Id> Info </a></td>
+                    <td>@dept.CityFrom.Name</td>
+                    <td>@dept.CityTo.Name</td>
+                    <td>@dept.Carrier.Name</td>
+                    <td>@dept.PriceOfCard</td>
+                    <td>@dept.NumberOfSeats</td>
+                    <td>@dept.Distance.DistanceBetween</td>
+                    <td><a class="btn btn-outline-primary"> Make Card </a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 

@@ -1,8 +1,10 @@
 ﻿using BusStationIS.Data;
 using BusStationIS.Data.Models;
 using BusStationIS.Data.ServiceSpecification;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BusStationIS.Service
@@ -33,12 +35,20 @@ namespace BusStationIS.Service
 
         public IEnumerable<Departure> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Departures
+                .Include(d => d.CityFrom)
+                .Include(d => d.CityTo)
+                .Include(d => d.Distance)
+                .Include(d => d.Carrier)
+                    .ThenInclude(c => c.Address)
+                .Include(d => d.PaymentCategory)
+                .Include(d => d.Vehicle);
         }
 
         public Departure GetById(int id)
         {
-            throw new NotImplementedException();
+            return GetAll()
+                .FirstOrDefault(d => d.Id == id);
         }
     }
 }

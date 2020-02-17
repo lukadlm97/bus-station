@@ -32,7 +32,29 @@ namespace BusStationIS.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var departures = _deparatureService.GetAll();
+
+            var departuresListing = departures.Select(d => new DepartureDetailModel
+            {
+                Id = d.Id,
+                Cards = d.Cards,
+                NumberOfSeats = d.NumberOfSeats,
+                Carrier = d.Carrier,
+                CityFrom = d.CityFrom,
+                CityTo = d.CityTo,
+                Distance = d.Distance,
+                PaymentCategory = d.PaymentCategory,
+                PriceOfCard = d.PriceOfCard,
+                Vehicle = d.Vehicle
+            });
+
+            var model = new DepartureIndexModel
+            {
+                Departures = departuresListing
+            };
+
+
+            return View(model);
         }
 
 
