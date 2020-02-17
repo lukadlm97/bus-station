@@ -39,6 +39,13 @@ namespace BusStationIS.Service
                 .FirstOrDefault(c => c.Name.ToLower() == name.ToLower());
         }
 
+        public bool IsSameCity(City cityFrom, City cityTo)
+        {
+            if (cityFrom == cityTo)
+                return true;
+            return false;
+        }
+
         public void Update(int id)
         {
             throw new NotImplementedException();

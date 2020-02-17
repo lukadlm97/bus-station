@@ -16,14 +16,16 @@ namespace BusStationIS.Controllers
         private readonly ICarrier _carrierService;
         private readonly IPaymentCategory _paymentCategoryService;
         private readonly IVehicle _vehicleService;
+        private readonly IDistance _distanceService;
 
-        public DepartureController(IDeparture departureService,ICity cityService,ICarrier carrierService,IPaymentCategory paymentCategoryService,IVehicle vehicleService)
+        public DepartureController(IDeparture departureService,ICity cityService,ICarrier carrierService,IPaymentCategory paymentCategoryService,IVehicle vehicleService,IDistance distanceService)
         {
             _deparatureService = departureService;
             _cityService = cityService;
             _carrierService = carrierService;
             _paymentCategoryService = paymentCategoryService;
             _vehicleService = vehicleService;
+            _distanceService = distanceService;
         }
 
         public IActionResult Index()
@@ -50,7 +52,9 @@ namespace BusStationIS.Controllers
                 Vehicle = _vehicleService.GetByRegistration(departureInput.VehicleRegistration)
             };
 
-            if(IsSameCity(newDeparture.CityFrom,newDeparture.CityTo))
+            newDeparture.Distance = _distanceService.CalculateDistance(newDeparture.CityFrom,newDeparture.CityTo);
+
+            if(_cityService.IsSameCity(newDeparture.CityFrom,newDeparture.CityTo))
             {
                 TempData["msg"] = "Departure must be between two different cities!";
                 return Create();
@@ -68,12 +72,7 @@ namespace BusStationIS.Controllers
             return RedirectToPage("/Index");
         }
 
-        private bool IsSameCity(City cityFrom, City cityTo)
-        {
-            if (cityFrom == cityTo)
-                return true;
-            return false;
-        }
+        
 
         public IActionResult Create()
         {

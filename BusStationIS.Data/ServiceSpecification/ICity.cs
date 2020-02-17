@@ -12,5 +12,6 @@ namespace BusStationIS.Data.ServiceSpecification
         void Update(int id);
         void Delete(int id);
         City GetByName(string name);
+        bool IsSameCity(City cityFrom, City cityTo);
     }
 }
