@@ -1,9 +1,13 @@
 ﻿using BusStationIS.Data;
 using BusStationIS.Data.Models;
+using BusStationIS.Data.Models.Weather;
 using BusStationIS.Data.ServiceSpecification;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusStationIS.Service
 {
@@ -24,10 +28,13 @@ namespace BusStationIS.Service
                 CityTo = cityTo
             };
 
-
+            
 
 
             return distance;
         }
+
+       
+        
     }
 }
