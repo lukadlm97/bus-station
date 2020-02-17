@@ -17,8 +17,9 @@ namespace BusStationIS.Controllers
         private readonly IPaymentCategory _paymentCategoryService;
         private readonly IVehicle _vehicleService;
         private readonly IDistance _distanceService;
+        private readonly IPriceManager _priceService;
 
-        public DepartureController(IDeparture departureService,ICity cityService,ICarrier carrierService,IPaymentCategory paymentCategoryService,IVehicle vehicleService,IDistance distanceService)
+        public DepartureController(IDeparture departureService,ICity cityService,ICarrier carrierService,IPaymentCategory paymentCategoryService,IVehicle vehicleService,IDistance distanceService,IPriceManager priceManager)
         {
             _deparatureService = departureService;
             _cityService = cityService;
@@ -26,6 +27,7 @@ namespace BusStationIS.Controllers
             _paymentCategoryService = paymentCategoryService;
             _vehicleService = vehicleService;
             _distanceService = distanceService;
+            _priceService = priceManager;
         }
 
         public IActionResult Index()
@@ -54,11 +56,17 @@ namespace BusStationIS.Controllers
 
             newDeparture.Distance = _distanceService.CalculateDistance(newDeparture.CityFrom,newDeparture.CityTo);
 
+
             if(_cityService.IsSameCity(newDeparture.CityFrom,newDeparture.CityTo))
             {
                 TempData["msg"] = "Departure must be between two different cities!";
                 return Create();
             }
+            //TODO: create service for calculate price of card
+            newDeparture.PriceOfCard = _priceService.CalculatePrice(newDeparture.Distance.DistanceBetween, newDeparture.PaymentCategory.Price);
+
+            //TODO: get number of seats by vehicle
+            newDeparture.NumberOfSeats = newDeparture.Vehicle.Capacity;
 
             if (_deparatureService.Add(newDeparture))
             {

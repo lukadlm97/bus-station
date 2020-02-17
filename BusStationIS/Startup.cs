@@ -37,6 +37,7 @@ namespace BusStationIS
             services.AddScoped<IDeparture, DepartureService>();
             services.AddScoped<IPaymentCategory, PaymentCategoryService>();
             services.AddScoped<IDistance, DistanceService>();
+            services.AddScoped<IPriceManager, PriceService>();
             services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
