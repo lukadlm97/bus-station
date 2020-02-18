@@ -23,7 +23,8 @@
                 <th scope="col">Price</th>
                 <th scope="col">Number of Seats</th>
                 <th scope="col">Distance</th>
-                <th scope="col">Cards</th>
+                <th scope="col">Options</th>
+                <th scope="col">Generate</th>
             </tr>
         </thead>
         <tbody>
@@ -57,6 +58,13 @@
                             </button>
                         </form>
                     </div>
+                </td>
+                <td>
+                    <form asp-action="GenerateWord" asp-controller="Departure" asp-route-id=@dept.Id>
+                        <button type="submit" class="btn btn-primary" aria-label="Info">
+                            <i class="mdi mdi-file-word"></i> Generate Word
+                        </button>
+                    </form>
                 </td>
             </tr>
             }

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BusStationIS.Data.Models;
 using BusStationIS.Data.ServiceSpecification;
 using BusStationIS.Models.Departure;
 using Microsoft.AspNetCore.Mvc;
+using Syncfusion.DocIO;
+using Syncfusion.DocIO.DLS;
 
 namespace BusStationIS.Controllers
 {
@@ -103,6 +106,24 @@ namespace BusStationIS.Controllers
             return View(model);
         }
 
+        public IActionResult GenerateWord(int id)
+        {
+            Departure departure = _deparatureService.GetById(id);
+
+            using (WordDocument document = new WordDocument())
+            {
+                document.EnsureMinimal();
+                document.LastParagraph.AppendText("Hello Word");
+                MemoryStream stream = new MemoryStream();
+
+                document.Save(stream, FormatType.Docx);
+
+                stream.Position = 0;
+
+                return File(stream, "application/msword", "Result.docx");
+            }
+
+        }
 
         [HttpPost]
         public IActionResult Create([Bind]DepartureInputModel departureInput)
