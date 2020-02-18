@@ -79,6 +79,31 @@ namespace BusStationIS.Controllers
             return View(model);
         }
 
+        public IActionResult MakeSpecDeparture([Bind] SpecificallyDepartureIndex specificallyDeparture)
+        {
+            return View();
+        }
+
+        public IActionResult CreateSpecificallyDeparture()
+        {
+            var departures = _deparatureService.GetAll();
+
+            var detailsDeparures = departures.Select(x => new SpecificallyDepartureDetail
+            {
+                Id = x.Id,
+                Departure = x
+            });
+
+            var model = new SpecificallyDepartureIndex 
+            { 
+                Departures = _deparatureService.GetAll(),
+                SpecificallyDepartureDetails = detailsDeparures
+            };
+
+            return View(model);
+        }
+
+
         [HttpPost]
         public IActionResult Create([Bind]DepartureInputModel departureInput)
         {
