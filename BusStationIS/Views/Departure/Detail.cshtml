@@ -7,10 +7,15 @@
         <div class="page-header clearfix datailHeading">
             <h2 class="text-muted">View Departure Item</h2>
         </div>
+        <form asp-controller="Card" asp-action="Make" asp-route-id=@Model.Id>
+            <button type="submit" class="btn btn-primary" aria-label="Make">
+                <i class="mdi mdi-ticket" aria-hidden="true"></i>Make Card for This Departure
+            </button>
+        </form>
     </div>
 
 <div class="jumbotron bg-light">
-    <div class="col-md-3">
+    <div class="col-md-3 bg-primary">
         <div class="nameItem">City From:</div>
         <p class="itemName">@Model.CityFrom.Name</p>
         <div class="nameItem">City To:</div>
@@ -24,7 +29,7 @@
         <div class="nameItem">Payment Category:</div>
         <p class="itemName">@Model.PaymentCategory.Name</p>
     </div>
-    <div>
+    <div class="col-md-3 bg-primary">
         <div class="nameItem">INFO ABOUT DEPARUTE:</div>
         <div class="nameItem">Number Of Seats:</div>
         <p class="itemName">@Model.NumberOfSeats</p>

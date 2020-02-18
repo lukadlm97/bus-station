@@ -27,6 +27,7 @@ namespace BusStationIS.Data
         public DbSet<User> Users { get; set; }
         public DbSet<UserCategory> UserCategories { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<SpecificallyDeparture> SpecificallyDepartures { get; set; }
 
     }
 }
