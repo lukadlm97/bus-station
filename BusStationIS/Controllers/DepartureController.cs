@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 using BusStationIS.Data.Models;
 using BusStationIS.Data.ServiceSpecification;
 using BusStationIS.Models.Departure;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
 
@@ -122,7 +125,29 @@ namespace BusStationIS.Controllers
 
                 return File(stream, "application/msword", "Result.docx");
             }
+        }
 
+        public IActionResult GeneratePdf()
+        {
+            PdfDocument document = new PdfDocument();
+            document.Info.Title = "Created with PDFSharp";
+
+            PdfPage page = document.AddPage();
+
+            XGraphics grf = XGraphics.FromPdfPage(page);
+
+            XFont font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
+
+            grf.DrawString("Hello World!", font, XBrushes.Black,
+                new XRect(0, 0, page.Width, page.Height), XStringFormat.Center);
+            MemoryStream stream = new MemoryStream();
+
+     
+            document.Save(stream, false);
+
+            stream.Position = 0;
+
+            return File(stream,"application/pdf","HelloPDF.pdf");
         }
 
         [HttpPost]
