@@ -8,6 +8,7 @@ using BusStationIS.Data.ServiceSpecification;
 using BusStationIS.Models.Departure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MigraDoc.DocumentObjectModel;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using Syncfusion.DocIO;
@@ -109,6 +110,9 @@ namespace BusStationIS.Controllers
             return View(model);
         }
 
+
+
+
         public IActionResult GenerateWord(int id)
         {
             Departure departure = _deparatureService.GetById(id);
@@ -142,12 +146,111 @@ namespace BusStationIS.Controllers
                 new XRect(0, 0, page.Width, page.Height), XStringFormat.Center);
             MemoryStream stream = new MemoryStream();
 
-     
             document.Save(stream, false);
 
             stream.Position = 0;
 
             return File(stream,"application/pdf","HelloPDF.pdf");
+        }
+
+        public IActionResult GenDocs()
+        {
+            DateTime now = DateTime.Now;
+            string filename = "MixMigraDocAndPdfSharp.pdf";
+            filename = Guid.NewGuid().ToString("D").ToUpper() + ".pdf";
+            PdfDocument document = new PdfDocument();
+            document.Info.Title = "PdfSharp XGraphic Sample";
+            document.Info.Author = "Luka Radovanovic";
+            document.Info.Subject = "Create with code snippets that show the use of graphical functions";
+            document.Info.Keywords = "PDFsharp, XGraphics";
+
+            SamplePage1(document);
+            SamplePage2(document);
+
+            MemoryStream stream = new MemoryStream();
+
+            document.Save(stream, false);
+            stream.Position = 0;
+            return File(stream, "application/pdf", "HelloPDF.pdf");
+        }
+
+        private void SamplePage2(PdfDocument document)
+        {
+            PdfPage page = document.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+
+            gfx.MUH = PdfFontEncoding.Unicode;
+
+            Document doc = new Document();
+
+            MigraDoc.Rendering.DocumentRenderer docRender = new MigraDoc.Rendering.DocumentRenderer(doc);
+
+            docRender.PrepareDocument();
+
+            XRect A4Rect = new XRect(0, 0, XUnit.FromCentimeter(21).Point, XUnit.FromCentimeter(29.7).Point);
+
+            int pageCount = docRender.FormattedDocument.PageCount;
+
+            for(int idx = 0; idx < pageCount; idx++)
+            {
+                XRect rect = GetRect(idx);
+                XGraphicsContainer container = gfx.BeginContainer(rect, A4Rect, XGraphicsUnit.Point);
+
+                gfx.DrawRectangle(XPens.LightGray, A4Rect);
+
+                docRender.RenderPage(gfx, idx + 1);
+
+                gfx.EndContainer(container);
+            }
+        }
+
+        private XRect GetRect(int idx)
+        {
+            XRect rect = new XRect(0, 0, XUnit.FromCentimeter(21).Point / 3 * 0.9, XUnit.FromCentimeter(29.7).Point / 3 * 0.9);
+            rect.X = (idx % 3) * XUnit.FromCentimeter(21).Point / 3 + XUnit.FromCentimeter(21).Point * 0.05 / 3;
+            rect.Y = (idx / 3) * XUnit.FromCentimeter(29.7).Point / 3 + XUnit.FromCentimeter(29.7).Point * 0.05 / 3;
+            return rect;
+        }
+
+        [Obsolete]
+        private void SamplePage1(PdfDocument document)
+        {
+            PdfPage page = document.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+
+            gfx.MUH = PdfFontEncoding.Unicode;
+
+            XFont font = new XFont("Verdana", 13, XFontStyle.Bold);
+
+            gfx.DrawString("The following paragraph was rendered using MigraDoc:",
+                font, XBrushes.Black, new XRect(100, 100, page.Width-100,100),
+                XStringFormats.Center);
+
+            Document doc = new Document();
+            Section sec = doc.AddSection();
+
+            Paragraph para = sec.AddParagraph();
+
+            para.Format.Alignment = ParagraphAlignment.Justify;
+            para.Format.Font.Name = "Times New Roman";
+            para.Format.Font.Size = 12;
+            para.Format.Font.Color = MigraDoc.DocumentObjectModel.Colors.DarkGray;
+            para.AddText("Duisism odigna acipsum delesenisl ");
+            para.AddFormattedText("ullum in velenit");
+            para.AddText(" ipit iurero dolum zzriliquisis nit wis dolore vel et nonsequipit, velendigna " +
+"auguercilit lor se dipisl duismod tatem zzrit at laore magna feummod oloborting ea con vel " +
+"essit augiati onsequat luptat nos diatum vel ullum illummy nonsent nit ipis et nonsequis "+
+"niation utpat. Odolobor augait et non etueril landre min ut ulla feugiam commodo lortie ex " +
+"essent augait el ing eumsan hendre feugait prat augiatem amconul laoreet. ≤≥≈≠");
+
+            para.Format.Borders.Distance = "20pt";
+            para.Format.Borders.Color = Colors.Coral;
+
+            MigraDoc.Rendering.DocumentRenderer documentRenderer = new MigraDoc.Rendering.DocumentRenderer(doc);
+            documentRenderer.PrepareDocument();
+
+            documentRenderer.RenderObject(gfx, XUnit.FromCentimeter(5),
+                XUnit.FromCentimeter(10), "12cm", para);
         }
 
         [HttpPost]
