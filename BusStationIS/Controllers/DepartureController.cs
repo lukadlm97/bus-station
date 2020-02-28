@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MigraDoc.DocumentObjectModel;
 using PdfSharp.Drawing;
+using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
@@ -202,6 +203,118 @@ namespace BusStationIS.Controllers
 
                 gfx.EndContainer(container);
             }
+        }
+
+
+
+        public IActionResult TextAlignment()
+        {
+            const string text =
+  "Facin exeraessisit la consenim iureet dignibh eu facilluptat vercil dunt autpat. " +
+  "Ecte magna faccum dolor sequisc iliquat, quat, quipiss equipit accummy niate magna " +
+  "facil iure eraesequis am velit, quat atis dolore dolent luptat nulla adio odipissectet " +
+  "lan venis do essequatio conulla facillandrem zzriusci bla ad minim inis nim velit eugait " +
+  "aut aut lor at ilit ut nulla ate te eugait alit augiamet ad magnim iurem il eu feuissi.\n" +
+  "Guer sequis duis eu feugait luptat lum adiamet, si tate dolore mod eu facidunt adignisl in " +
+  "henim dolorem nulla faccum vel inis dolutpatum iusto od min ex euis adio exer sed del " +
+  "dolor ing enit veniamcon vullutat praestrud molenis ciduisim doloborem ipit nulla consequisi.\n" +
+  "Nos adit pratetu eriurem delestie del ut lumsandreet nis exerilisit wis nos alit venit praestrud " +
+  "dolor sum volore facidui blaor erillaortis ad ea augue corem dunt nis  iustinciduis euisi.\n" +
+  "Ut ulputate volore min ut nulpute dolobor sequism olorperilit autatie modit wisl illuptat dolore " +
+  "min ut in ute doloboreet ip ex et am dunt at.";
+
+            PdfDocument document = new PdfDocument();
+
+            PdfPage page = document.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            XFont font = new XFont("Times New Roman", 16, XFontStyle.Bold);
+            XTextFormatter tf = new XTextFormatter(gfx);
+
+            XRect xRect = new XRect(40,40,250,220);
+            gfx.DrawRectangle(XBrushes.SeaShell, xRect);
+            tf.DrawString("Naslov", font, XBrushes.Black, xRect, XStringFormats.TopLeft);
+
+            font = new XFont("Times New Roman", 10, XFontStyle.Bold);
+
+            XRect rect = new XRect(40, 100, 250, 220);
+            gfx.DrawRectangle(XBrushes.SeaShell, rect);
+            //tf.Alignment = ParagraphAlignment.Left;
+            tf.DrawString(text, font, XBrushes.Black, rect, XStringFormats.TopLeft);
+
+            rect = new XRect(310, 100, 250, 220);
+            gfx.DrawRectangle(XBrushes.SeaShell, rect);
+            tf.Alignment = XParagraphAlignment.Right;
+            tf.DrawString(text, font, XBrushes.Black, rect, XStringFormats.TopLeft);
+
+            rect = new XRect(40, 400, 250, 220);
+            gfx.DrawRectangle(XBrushes.SeaShell, rect);
+            tf.Alignment = XParagraphAlignment.Center;
+            tf.DrawString(text, font, XBrushes.Black, rect, XStringFormats.TopLeft);
+
+            rect = new XRect(310, 400, 250, 220);
+            gfx.DrawRectangle(XBrushes.SeaShell, rect);
+            tf.Alignment = XParagraphAlignment.Justify;
+            tf.DrawString(text, font, XBrushes.Black, rect, XStringFormats.TopLeft);
+
+            MemoryStream stream = new MemoryStream();
+
+            document.Save(stream, false);
+            stream.Position = 0;
+            return File(stream, "application/pdf", "alignment.pdf");
+        }
+
+        public IActionResult Watermark()
+        {
+            const string text =
+ "Facin exeraessisit la consenim iureet dignibh eu facilluptat vercil dunt autpat. " +
+ "Ecte magna faccum dolor sequisc iliquat, quat, quipiss equipit accummy niate magna " +
+ "facil iure eraesequis am velit, quat atis dolore dolent luptat nulla adio odipissectet " +
+ "lan venis do essequatio conulla facillandrem zzriusci bla ad minim inis nim velit eugait " +
+ "aut aut lor at ilit ut nulla ate te eugait alit augiamet ad magnim iurem il eu feuissi.\n" +
+ "Guer sequis duis eu feugait luptat lum adiamet, si tate dolore mod eu facidunt adignisl in " +
+ "henim dolorem nulla faccum vel inis dolutpatum iusto od min ex euis adio exer sed del " +
+ "dolor ing enit veniamcon vullutat praestrud molenis ciduisim doloborem ipit nulla consequisi.\n" +
+ "Nos adit pratetu eriurem delestie del ut lumsandreet nis exerilisit wis nos alit venit praestrud " +
+ "dolor sum volore facidui blaor erillaortis ad ea augue corem dunt nis  iustinciduis euisi.\n" +
+ "Ut ulputate volore min ut nulpute dolobor sequism olorperilit autatie modit wisl illuptat dolore " +
+ "min ut in ute doloboreet ip ex et am dunt at.";
+
+            PdfDocument document = new PdfDocument();
+
+            PdfPage page = document.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page, XGraphicsPdfPageOptions.Prepend);
+            XFont font = new XFont("Times New Roman", 16, XFontStyle.Bold);
+            XTextFormatter tf = new XTextFormatter(gfx);
+
+            XRect xRect = new XRect(40, 40, 250, 220);
+            gfx.DrawRectangle(XBrushes.SeaShell, xRect);
+            tf.DrawString("Naslov", font, XBrushes.Black, xRect, XStringFormats.TopLeft);
+
+            font = new XFont("Times New Roman", 10, XFontStyle.Bold);
+
+            XRect rect = new XRect(40, 100, 250, 220);
+            gfx.DrawRectangle(XBrushes.SeaShell, rect);
+            //tf.Alignment = ParagraphAlignment.Left;
+            tf.DrawString(text, font, XBrushes.Black, rect, XStringFormats.TopLeft);
+
+            var size = gfx.MeasureString("PDFSharp", font);
+
+            gfx.TranslateTransform(page.Width / 2, page.Height / 2);
+            gfx.RotateTransform(-Math.Atan(page.Height / page.Width) * 180 / Math.PI);
+            gfx.TranslateTransform(-page.Width / 2, -page.Height / 2);
+
+            var format = new XStringFormat();
+            format.Alignment = XStringAlignment.Near;
+            format.LineAlignment = XLineAlignment.Near;
+
+            XBrush brush = new XSolidBrush(XColor.FromArgb(128, 255, 0, 0));
+
+            gfx.DrawString("Wathermark", font, brush, new XPoint((page.Width - size.Width) / 2, (page.Height - size.Height) / 2), format);
+            MemoryStream stream = new MemoryStream();
+
+            document.Save(stream, false);
+            stream.Position = 0;
+            return File(stream, "application/pdf", "watermark.pdf");
         }
 
         public IActionResult A4Page()
