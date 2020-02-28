@@ -204,6 +204,56 @@ namespace BusStationIS.Controllers
             }
         }
 
+        public IActionResult A4Page()
+        {
+            PdfDocument document = new PdfDocument();
+
+            XFont font = new XFont("Times", 25, XFontStyle.Bold);
+
+            PdfPage page = document.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            gfx.DrawString("Page 1", font, XBrushes.Black, 20, 50, XStringFormat.Default);
+            
+            page.Size = PdfSharp.PageSize.A4;
+            page.Orientation = PdfSharp.PageOrientation.Landscape;
+
+            MemoryStream stream = new MemoryStream();
+
+            document.Save(stream, false);
+            stream.Position = 0;
+            return File(stream, "application/pdf", "A4.pdf");
+        }
+
+        public IActionResult MultiPage()
+        {
+            PdfDocument document = new PdfDocument();
+            XFont font = new XFont("Verdana", 16);
+
+            PdfPage page = document.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            gfx.DrawString("Page 1", font, XBrushes.Black, 20, 50, XStringFormat.Default);
+
+            PdfOutline outline = document.Outlines.Add("Root", page, true, PdfOutlineStyle.Bold, XColors.Red);
+
+            for(int idx = 2; idx < 5; idx++)
+            {
+                page = document.AddPage();
+
+                gfx = XGraphics.FromPdfPage(page);
+                string text = "Page" + idx;
+                gfx.DrawString(text, font, XBrushes.Black, 20, 50, XStringFormats.Default);
+
+                outline.Outlines.Add(text, page, true);
+            }
+
+
+            MemoryStream stream = new MemoryStream();
+
+            document.Save(stream, false);
+            stream.Position = 0;
+            return File(stream, "application/pdf", "MultiPage.pdf");
+        }
+
         private XRect GetRect(int idx)
         {
             XRect rect = new XRect(0, 0, XUnit.FromCentimeter(21).Point / 3 * 0.9, XUnit.FromCentimeter(29.7).Point / 3 * 0.9);
