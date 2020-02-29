@@ -9,6 +9,9 @@ using BusStationIS.Models.Departure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MigraDoc.DocumentObjectModel;
+using MigraDoc.DocumentObjectModel.Shapes;
+using MigraDoc.DocumentObjectModel.Tables;
+using MigraDoc.Rendering;
 using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
@@ -283,6 +286,52 @@ namespace BusStationIS.Controllers
         {
             gfx.DrawImage(XImage.FromFile(img), v2, v3, v4, v5);
         }
+
+        public IActionResult GenTable()
+        {
+            const string text =
+  "Facin exeraessisit la consenim iureet dignibh eu facilluptat vercil dunt autpat. " +
+  "Ecte magna faccum dolor sequisc iliquat, quat, quipiss equipit accummy niate magna " +
+  "facil iure eraesequis am velit, quat atis dolore dolent luptat nulla adio odipissectet " +
+  "lan venis do essequatio conulla facillandrem zzriusci bla ad minim inis nim velit eugait " +
+  "aut aut lor at ilit ut nulla ate te eugait alit augiamet ad magnim iurem il eu feuissi.\n" +
+  "Guer sequis duis eu feugait luptat lum adiamet, si tate dolore mod eu facidunt adignisl in " +
+  "henim dolorem nulla faccum vel inis dolutpatum iusto od min ex euis adio exer sed del " +
+  "dolor ing enit veniamcon vullutat praestrud molenis ciduisim doloborem ipit nulla consequisi.\n" +
+  "Nos adit pratetu eriurem delestie del ut lumsandreet nis exerilisit wis nos alit venit praestrud " +
+  "dolor sum volore facidui blaor erillaortis ad ea augue corem dunt nis  iustinciduis euisi.\n" +
+  "Ut ulputate volore min ut nulpute dolobor sequism olorperilit autatie modit wisl illuptat dolore " +
+  "min ut in ute doloboreet ip ex et am dunt at.";
+
+            PdfDocument document = new PdfDocument();
+            document.Info.Title = "A simple invoce";
+            document.Info.Subject = "Demonstrate how to create an invoce.";
+            document.Info.Author = "Luka Radovanovic";
+
+            PdfPage page = document.AddPage();
+            page.Size = PdfSharp.PageSize.A4;
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            XTextFormatter tf = new XTextFormatter(gfx);
+
+            XFont font = new XFont("Times New Roman", 20, XFontStyle.Bold);
+            XRect rect = new XRect(40, 50, 50, 50);
+            tf.Alignment = XParagraphAlignment.Center;
+            tf.DrawString("Naslov", font, XBrushes.Black, rect, XStringFormats.TopLeft);
+
+            font = new XFont("Times New Roman", 14, XFontStyle.Regular);
+            rect = new XRect(40, 100, 500, 500);
+            gfx.DrawRectangle(XBrushes.SeaShell, rect);
+            tf.Alignment = XParagraphAlignment.Left;
+            tf.DrawString(text, font, XBrushes.Black, rect, XStringFormats.TopLeft);
+
+            MemoryStream stream = new MemoryStream();
+
+        
+            document.Save(stream, false);
+            stream.Position = 0;
+            return File(stream, "application/pdf", "table.pdf");
+        }
+        
 
         public IActionResult Watermark()
         {
