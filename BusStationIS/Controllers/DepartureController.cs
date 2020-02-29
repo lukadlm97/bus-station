@@ -263,6 +263,27 @@ namespace BusStationIS.Controllers
             return File(stream, "application/pdf", "alignment.pdf");
         }
 
+
+        public IActionResult GenImg()
+        {
+            PdfDocument document = new PdfDocument();
+
+            PdfPage page = document.AddPage();
+
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            DrawImage(gfx, "wwwroot/images/citys/bg.png", 50, 50, 250, 250);
+            MemoryStream stream = new MemoryStream();
+
+            document.Save(stream, false);
+            stream.Position = 0;
+            return File(stream, "application/pdf", "image.pdf");
+        }
+
+        private void DrawImage(XGraphics gfx, string img, int v2, int v3, int v4, int v5)
+        {
+            gfx.DrawImage(XImage.FromFile(img), v2, v3, v4, v5);
+        }
+
         public IActionResult Watermark()
         {
             const string text =
