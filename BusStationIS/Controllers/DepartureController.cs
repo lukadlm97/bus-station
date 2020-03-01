@@ -148,6 +148,7 @@ namespace BusStationIS.Controllers
 
             grf.DrawString("Hello World!", font, XBrushes.Black,
                 new XRect(0, 0, page.Width, page.Height), XStringFormat.Center);
+            
             MemoryStream stream = new MemoryStream();
 
             document.Save(stream, false);
@@ -168,7 +169,7 @@ namespace BusStationIS.Controllers
             document.Info.Subject = "Create with code snippets that show the use of graphical functions";
             document.Info.Keywords = "PDFsharp, XGraphics";
 
-            SamplePage1(document);
+         //   SamplePage1(document);
             SamplePage2(document);
 
             MemoryStream stream = new MemoryStream();
@@ -176,6 +177,44 @@ namespace BusStationIS.Controllers
             document.Save(stream, false);
             stream.Position = 0;
             return File(stream, "application/pdf", "HelloPDF.pdf");
+        }
+
+        public IActionResult GradientDocs()
+        {
+            var document = new PdfDocument();
+            using (document = new PdfDocument())
+            {
+                var page = document.AddPage();
+                var graphics = XGraphics.FromPdfPage(page, XGraphicsPdfPageOptions.Append);
+
+                var bounds = new XRect(graphics.PageOrigin, graphics.PageSize);
+                var state = graphics.Save();
+
+                graphics.DrawRectangle(
+                    new XLinearGradientBrush(bounds,
+                    XColor.FromKnownColor(XKnownColor.Red),
+                    XColor.FromKnownColor(XKnownColor.White),
+                    XLinearGradientMode.ForwardDiagonal),bounds
+                    );
+                graphics.Restore(state);
+                graphics.DrawString("Hello world",
+                    new XFont("Arial", 20),
+                    XBrushes.Black,
+                    bounds.Center,
+                    XStringFormat.Center);
+                
+                XPen pen = new XPen(XColors.DarkBlue, 2.5);
+                graphics.DrawPie(pen, 10, 0, 100, 90, -120, 75);
+                
+
+                document.Save("test.pdf");
+                document.Close();
+            }
+            MemoryStream stream = new MemoryStream();
+
+            document.Save(stream, false);
+            stream.Position = 0;
+            return File(stream, "application/pdf", "test.pdf");
         }
 
         private void SamplePage2(PdfDocument document)
@@ -206,6 +245,7 @@ namespace BusStationIS.Controllers
 
                 gfx.EndContainer(container);
             }
+            
         }
 
 

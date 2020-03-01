@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -9,6 +10,10 @@ using BusStationIS.Models;
 using BusStationIS.Models.City;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Syncfusion.Drawing;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using Syncfusion.Pdf.Tables;
 
 namespace BusStationIS.Controllers
 {
@@ -75,6 +80,36 @@ namespace BusStationIS.Controllers
                 }
             }
                
+        }
+
+        public IActionResult GenTable()
+        {
+            PdfDocument document;
+
+           document = new PdfDocument();
+                PdfPage page = document.Pages.Add();
+
+                PdfGraphics graphics = page.Graphics;
+
+                PdfLightTable pdfLightTable = new PdfLightTable();
+
+                pdfLightTable.DataSourceType = PdfLightTableDataSourceType.TableDirect;
+
+                pdfLightTable.Columns.Add(new PdfColumn("Roll Number"));
+                pdfLightTable.Columns.Add(new PdfColumn("Name"));
+                pdfLightTable.Columns.Add(new PdfColumn("Class"));
+
+                pdfLightTable.Rows.Add(new object[] { "111", "Luka", "III" });
+
+                pdfLightTable.Draw(page, PointF.Empty);
+
+
+           
+            MemoryStream stream = new MemoryStream();
+            document.Save(stream);
+
+            stream.Position = 0;
+            return File(stream,"application/pdf","test.pdf");
         }
 
 
